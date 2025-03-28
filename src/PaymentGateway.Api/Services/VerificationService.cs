@@ -65,7 +65,7 @@ namespace PaymentGateway.Api.Services
                 errors.Add(new Error
                 {
                     Code = "InvalidExpiry",
-                    Message = "Expiry month and year must be in the future."
+                    Message = "Expiry month and year must be now or in the future."
                 });
             }
         }

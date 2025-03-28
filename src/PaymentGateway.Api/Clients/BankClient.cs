@@ -3,6 +3,7 @@ using System.Text.Json;
 
 using Microsoft.Extensions.Options;
 
+using PaymentGateway.Api.Exceptions;
 using PaymentGateway.Api.Models;
 using PaymentGateway.Api.Models.Requests;
 using PaymentGateway.Api.Models.Responses;
@@ -34,7 +35,7 @@ namespace PaymentGateway.Api.Clients
             catch(Exception ex)
             {
                 logger.LogError(ex, "An error occured when sending payment request to bank");
-                throw;
+                throw new BankException("BankException", "An error occured when sending payment request to bank");
             }
         }
     }

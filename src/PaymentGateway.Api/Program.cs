@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 using PaymentGateway.Api.Clients;
+using PaymentGateway.Api.Middleware;
 using PaymentGateway.Api.Models;
 using PaymentGateway.Api.Services;
 
@@ -29,6 +30,7 @@ builder.Services.AddHttpClient<IBankClient, BankClient>();
 
 builder.Services.Configure<BankClientOptions>(builder.Configuration.GetSection("BankClient"));
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,6 +43,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 

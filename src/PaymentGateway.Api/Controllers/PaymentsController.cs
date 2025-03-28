@@ -31,11 +31,14 @@ public class PaymentsController(
     [HttpPost(Name = "SendPayment")]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(PostPaymentResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PostPaymentResponse), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<PostPaymentResponse>> SendPaymentAsync(
         [FromBody] PostPaymentRequest request)
     {
         var response = await paymentsProcessor.Process(request);
         
+        if (response.Status == Models.PaymentStatus.Rejected) return new BadRequestObjectResult(response);
+
         return new OkObjectResult(response);
     }
 }

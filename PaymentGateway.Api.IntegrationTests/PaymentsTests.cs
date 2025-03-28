@@ -145,7 +145,7 @@ namespace PaymentGateway.Api.IntegrationTests
 
         [Theory]
         [InlineData("1234567890123453")]
-        public async Task SendPayment_InvalidPayment_ReturnsOkWithPaymentStatusRejected(string cardNumber)
+        public async Task SendPayment_InvalidPayment_ReturnsHTTP400WithPaymentStatusRejected(string cardNumber)
         {
             // Arrange
             var request = new PostPaymentRequest
@@ -171,7 +171,7 @@ namespace PaymentGateway.Api.IntegrationTests
             var paymentResponseResult = await response.Content.ReadFromJsonAsync<PostPaymentResponse>(options);
 
             // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             paymentResponseResult.Should().NotBeNull();
             paymentResponseResult.Status.Should().Be(PaymentStatus.Rejected);
         }

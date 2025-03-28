@@ -21,6 +21,6 @@ Start the PaymentGatewayApi project in Visual Studio (or use the command `dotnet
 
 ## Potential improvements
 - Develop integration tests further so that they can running them spins up the docker container for the bank simulator.
-- Add more logging for observability: I was weery of adding logging that exposes sensitive information
+- Add more logging for observability: I was weary of adding logging that exposes sensitive information
 - Deployments: to a cloud provider like AWS or Azure in containers
 

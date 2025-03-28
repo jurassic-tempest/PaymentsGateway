@@ -139,7 +139,31 @@ namespace PaymentGateway.Api.Tests
             // Assert
             result.Should().ContainSingle();
             result[0].Code.Should().Be("InvalidExpiry");
-            result[0].Message.Should().Be("Expiry month and year must be in the future.");
+            result[0].Message.Should().Be("Expiry month and year must be now or in the future.");
+        }
+
+        [Theory]
+        [InlineData(2025, 3)]
+        [InlineData(2026, 3)]
+        public void ValidateRequest_ExpiryYearOrMonthNowOrInFuture_ReturnsError(
+            int expiryYear, int expiryMonth)
+        {
+            // Arrange
+            var request = new PostPaymentRequest
+            {
+                CardNumber = "1234567890123456",
+                ExpiryMonth = expiryMonth,
+                ExpiryYear = expiryYear,
+                Currency = "GBP",
+                Amount = 100,
+                Cvv = 123
+            };
+
+            // Act
+            var result = _verificationService.ValidateRequest(request);
+
+            // Assert
+            result.Should().BeEmpty();
         }
 
         [Theory]
